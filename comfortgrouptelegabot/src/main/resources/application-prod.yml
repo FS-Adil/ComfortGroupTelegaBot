@@ -1,0 +1,7 @@
+telegram:
+  bot:
+    token: ${TELEGRAM_BOT_TOKEN:}
+    username: ${TELEGRAM_BOT_USERNAME:comfort_group_telega_bot}
+
+server:
+  port: 8181

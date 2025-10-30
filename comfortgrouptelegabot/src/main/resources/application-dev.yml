@@ -1,0 +1,7 @@
+spring:
+  config:
+    import:
+      - "optional:file:./config/application-secrets.yml"
+
+server:
+  port: 8282
