@@ -3,9 +3,9 @@ package com.example.comfortgrouptelegabot.telegram;
 import com.example.comfortgrouptelegabot.config.BotProperties;
 
 import com.example.comfortgrouptelegabot.telegram.commands.CommandsHandler;
+import com.example.comfortgrouptelegabot.telegram.services.UserSessionService;
 import com.example.comfortgrouptelegabot.utils.Consts;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.bcel.Const;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -19,25 +19,33 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     private final CommandsHandler commandsHandler;
 
+    private final UserSessionService userSessionService;
+
     public TelegramBot(
             BotProperties botProperties,
-            CommandsHandler commandsHandler
+            CommandsHandler commandsHandler,
+            UserSessionService userSessionService
     ) {
         super(botProperties.getToken());
 
         this.botUserName = botProperties.getUsername();
         this.commandsHandler = commandsHandler;
+        this.userSessionService = userSessionService;
     }
 
     @Override
     public void onUpdateReceived(Update update) {
+//        Long userId = update.getMessage().getFrom().getId();
+
+//        if (userSessionService.isFirstVisit(userId)) {
+//            startMessage(update);
+//            userSessionService.markAsVisited(userId);
+//        }
+
         if (update.hasMessage() && update.getMessage().hasText()) {
-            String chatId = update.getMessage().getChatId().toString();
-            if (update.getMessage().getText().startsWith("/")) {
-                sendMessage(commandsHandler.handleCommands(update));
-            } else {
-                sendMessage(new SendMessage(chatId, Consts.CANT_UNDERSTAND));
-            }
+
+            sendMessage(commandsHandler.handleCommands(update));
+
         } else if (update.hasCallbackQuery()) {
             unknownCommand(update);
         } else {
@@ -48,6 +56,24 @@ public class TelegramBot extends TelegramLongPollingBot {
     @Override
     public String getBotUsername() {
         return botUserName;
+    }
+
+    private void startMessage(Update update) {
+        String userName = update.getMessage().getChat().getUserName();
+        var text = """
+                %s добро пожаловать в бот компании "Группа Комфорт"!
+                
+                Здесь Вы сможете узнать следующую информацию о производственных предприятиях:
+                 - Остатки закрытых рулонов
+                
+                Для этого воспользуйтесь командой:
+                /start - запуск программы
+                
+                Дополнительные команды:
+                /help - получение справки
+                """;
+        var formattedText = String.format(text, userName);
+        sendMessage(new SendMessage(update.getMessage().getChatId().toString(), formattedText));
     }
 
     private void unknownCommand(Update update) {
