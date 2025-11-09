@@ -1,6 +1,6 @@
-package com.example.comfortgrouptelegabot.telegram.commands;
+package com.example.comfortgrouptelegabot.telegram.command;
 
-import com.example.comfortgrouptelegabot.utils.Consts;
+import com.example.comfortgrouptelegabot.util.Consts;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -13,9 +13,11 @@ import java.util.Map;
 public class CommandsHandler {
     private final Map<String, Command> commandMap;
 
-    public CommandsHandler(StartCommand startCommand) {
+    public CommandsHandler(StartCommand startCommand,
+                           MenuCommand menuCommand) {
         this.commandMap = Map.of(
-                "/start", startCommand
+                "/start", startCommand,
+                "📋 Меню", menuCommand
         );
     }
 

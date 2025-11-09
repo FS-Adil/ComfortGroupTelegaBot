@@ -1,4 +1,4 @@
-package com.example.comfortgrouptelegabot.utils;
+package com.example.comfortgrouptelegabot.util;
 
 public class Consts {
     public static final String START_MESSAGE = """

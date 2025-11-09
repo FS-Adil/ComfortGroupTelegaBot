@@ -5,3 +5,9 @@ telegram:
 
 server:
   port: 8181
+
+onec:
+  odata:
+    base-url: ${ONEC_ODATA_BASE_URL:}
+    username: ${ONEC_ODATA_USERNAME:}
+    password: ${ONEC_ODATA_PASSWORD:}

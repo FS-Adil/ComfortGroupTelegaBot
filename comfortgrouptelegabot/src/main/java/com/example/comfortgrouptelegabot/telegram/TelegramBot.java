@@ -2,9 +2,9 @@ package com.example.comfortgrouptelegabot.telegram;
 
 import com.example.comfortgrouptelegabot.config.BotProperties;
 
-import com.example.comfortgrouptelegabot.telegram.commands.CommandsHandler;
-import com.example.comfortgrouptelegabot.telegram.services.UserSessionService;
-import com.example.comfortgrouptelegabot.utils.Consts;
+import com.example.comfortgrouptelegabot.telegram.command.CommandsHandler;
+import com.example.comfortgrouptelegabot.telegram.service.UserSessionService;
+import com.example.comfortgrouptelegabot.util.Consts;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
