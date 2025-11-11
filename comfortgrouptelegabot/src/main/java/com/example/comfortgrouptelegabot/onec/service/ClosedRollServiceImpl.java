@@ -21,7 +21,7 @@ import java.util.Objects;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class ClosedRollServiceIml implements ClosedRollService {
+public class ClosedRollServiceImpl implements ClosedRollService {
     private final RestClientConfig restClientConfig;
 
     /**
