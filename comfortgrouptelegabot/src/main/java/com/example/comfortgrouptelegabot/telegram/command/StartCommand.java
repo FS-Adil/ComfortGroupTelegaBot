@@ -1,6 +1,6 @@
-package com.example.comfortgrouptelegabot.telegram.commands;
+package com.example.comfortgrouptelegabot.telegram.command;
 
-import com.example.comfortgrouptelegabot.utils.Consts;
+import com.example.comfortgrouptelegabot.util.Consts;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
