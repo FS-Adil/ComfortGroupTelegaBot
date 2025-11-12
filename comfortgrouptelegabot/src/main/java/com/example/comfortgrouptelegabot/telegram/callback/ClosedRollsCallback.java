@@ -28,24 +28,15 @@ public class ClosedRollsCallback implements CallbackHandler{
 
         List<ClosedRollValue> closedRollValueList = closedRollService.findAllClosedRoll();
 
-        String text;
-        int size = closedRollValueList.size();
-        if (size == 0) {
-            text = "На складе 'Закрытые рулоны' на данный момент нет рулонов.";
-        } else if (size == 1) {
-            text = "На складе 'Закрытые рулоны' на данный момент 1 рулон:";
-        } else if (size <= 4) {
-            text = String.format("На складе 'Закрытые рулоны' на данный момент %s рулона:", size);
-        } else {
-            text = String.format("На складе 'Закрытые рулоны' на данный момент %s рулонов:", size);
-        }
-
         int num = 0;
         StringBuilder nomenclature = new StringBuilder();
 
         nomenclature.append("\n\n");
 
         for (ClosedRollValue closedRollValue: closedRollValueList) {
+            if (closedRollValue.getQuantityBalance() <= 0) {
+                continue;
+            }
             nomenclature.append(++num);
             nomenclature.append(". ");
             nomenclature.append(nomenclatureService.findNomenclatureById(
@@ -59,6 +50,18 @@ public class ClosedRollsCallback implements CallbackHandler{
             ).getDescription());
 
             nomenclature.append("\n");
+        }
+
+        String text;
+        int size = num;
+        if (size == 0) {
+            text = "На складе 'Закрытые рулоны' на данный момент нет рулонов.";
+        } else if (size == 1) {
+            text = "На складе 'Закрытые рулоны' на данный момент 1 рулон:";
+        } else if (size <= 4) {
+            text = String.format("На складе 'Закрытые рулоны' на данный момент %s рулона:", size);
+        } else {
+            text = String.format("На складе 'Закрытые рулоны' на данный момент %s рулонов:", size);
         }
 
         sendMessage.setText(
